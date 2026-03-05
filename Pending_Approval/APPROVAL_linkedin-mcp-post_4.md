@@ -9,7 +9,7 @@ impact: >-
   LinkedIn API
 
   Connected MCP servers: linkedin, odoo
-created: '2026-03-05T18:49:49.267Z'
+created: '2026-03-05T19:13:25.054Z'
 ---
 # Approval Required
 

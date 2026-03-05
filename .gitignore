@@ -21,6 +21,8 @@ gmail-token.json
 
 # Logs
 *.log
+Logs/ALERT_health_*.md
+Logs/health-status.json
 
 # OS
 .DS_Store
