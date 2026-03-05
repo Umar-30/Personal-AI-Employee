@@ -1,0 +1,29 @@
+[Unit]
+Description=AI Employee Cloud Agent (Platinum Tier)
+After=network.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/npx ts-node platinum/src/index.ts
+WorkingDirectory=/home/deploy/ai-employee
+EnvironmentFile=/home/deploy/ai-employee/.env.cloud
+User=deploy
+Restart=on-failure
+RestartSec=10
+StartLimitIntervalSec=300
+StartLimitBurst=10
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=ai-employee-cloud
+
+# Security hardening
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/home/deploy/vault /home/deploy/backups /home/deploy/ai-employee/gold
+
+[Install]
+WantedBy=multi-user.target

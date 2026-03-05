@@ -1,0 +1,49 @@
+{
+  "name": "ai-employee",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "ts-node bronze/src/index.ts",
+    "start:silver": "ts-node silver/src/index.ts",
+    "start:gold": "ts-node gold/src/index.ts",
+    "dev": "ts-node --watch bronze/src/index.ts",
+    "dev:silver": "ts-node --watch silver/src/index.ts",
+    "dev:gold": "ts-node --watch gold/src/index.ts",
+    "build": "tsc",
+    "init-vault": "ts-node bronze/src/config/init-vault.ts",
+    "trigger": "ts-node silver/src/scheduler/trigger.ts",
+    "trigger:gold": "ts-node gold/src/scheduler/trigger.ts",
+    "setup-scheduler": "ts-node silver/src/scheduler/setup-scheduler.ts",
+    "setup-gold-scheduler": "ts-node gold/src/scheduler/setup-gold-scheduler.ts",
+    "watchdog": "ts-node gold/src/watchdog/watchdog.ts",
+    "audit:verify": "ts-node gold/src/logging/verify-audit.ts",
+    "start:platinum": "ts-node platinum/src/index.ts",
+    "dev:platinum": "ts-node --watch platinum/src/index.ts",
+    "vault:sync": "ts-node platinum/src/sync/manual-sync.ts",
+    "health:check": "ts-node platinum/src/health/manual-health-check.ts",
+    "backup:create": "ts-node platinum/src/health/backup-manager.ts --once",
+    "deploy:setup": "ts-node platinum/src/deploy/setup-deployment.ts",
+    "demo:platinum": "ts-node platinum/src/demo/demo-runner.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@types/node": "^25.2.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.26.0",
+    "chokidar": "^5.0.0",
+    "execa": "^5.1.1",
+    "glob": "^13.0.3",
+    "gray-matter": "^4.0.3",
+    "linkedin-mcp-server": "^1.0.2",
+    "simple-git": "^3.31.1",
+    "zod": "^4.3.6"
+  }
+}

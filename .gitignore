@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Environment
+.env
+.env.*
+
+# Auth tokens and credentials — NEVER commit
+linkedin-token.txt
+*-token.txt
+*-token.json
+token.json
+credentials.json
+*.session
+whatsapp-session/
+playwright-session/
+gmail-token.json
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.tmp
+
+# TypeScript
+*.tsbuildinfo
+
+
+.node_modules/

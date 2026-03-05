@@ -1,0 +1,28 @@
+{
+  "agentMode": "local",
+  "uptimeSeconds": 1272,
+  "services": [
+    {
+      "name": "gmail_mcp",
+      "available": false,
+      "lastCheck": "2026-03-05T18:49:09.314Z",
+      "consecutiveFailures": 21
+    },
+    {
+      "name": "linkedin_mcp",
+      "available": true,
+      "lastCheck": "2026-03-05T18:49:09.319Z",
+      "consecutiveFailures": 0
+    },
+    {
+      "name": "odoo",
+      "available": true,
+      "lastCheck": "2026-03-05T18:49:09.319Z",
+      "consecutiveFailures": 0
+    }
+  ],
+  "syncFreshness": null,
+  "diskUsagePercent": 0,
+  "lastBackupTimestamp": null,
+  "healthy": false
+}

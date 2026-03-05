@@ -1,0 +1,6 @@
+{
+  "cloud": ["/Needs_Action", "/Plans", "/Updates", "/Logs"],
+  "local": ["/Pending_Approval", "/Approved", "/Rejected", "/Done", "/Briefings"],
+  "localExclusive": ["Dashboard.md", "Company_Handbook.md", "Business_Goals.md"],
+  "sharedRead": ["/Inbox"]
+}
