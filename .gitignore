@@ -23,6 +23,10 @@ gmail-token.json
 *.log
 Logs/ALERT_health_*.md
 Logs/health-status.json
+Logs/*.json
+
+# Pending Approval (runtime state)
+Pending_Approval/
 
 # OS
 .DS_Store
