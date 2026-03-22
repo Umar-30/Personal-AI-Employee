@@ -28,8 +28,25 @@ Logs/ALERT_health_*.md
 Logs/health-status.json
 Logs/*.json
 
-# Pending Approval (runtime state)
+# Runtime state folders
 Pending_Approval/
+Needs_Action/
+Inbox/
+Plans/
+Approved/
+Rejected/
+Done/
+Briefings/
+
+# Runtime files
+*.pid
+gold/gold-daemon.pid
+platinum/platinum-daemon.pid
+Dashboard.md
+
+# Alert and health logs
+Logs/alerts/
+Logs/ALERT_*.md
 
 # OS
 .DS_Store
