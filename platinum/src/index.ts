@@ -46,6 +46,7 @@ import { PlatinumExecutionContext } from './pipeline/platinum-executor';
 
 import fs from 'fs';
 import path from 'path';
+import http from 'http';
 
 class PlatinumDaemon {
   private config: PlatinumConfig;
@@ -500,6 +501,23 @@ class PlatinumDaemon {
     process.on('exit', () => this.removePidFile());
 
     this.logger.info('platinum_start', `Platinum AI Employee daemon is running (${this.agentMode} mode). Press Ctrl+C to stop.`);
+
+    // HTTP health check server (required for cloud deployment HTTPS URL)
+    const port = parseInt(process.env.PORT || '8080', 10);
+    const httpServer = http.createServer((_req, res) => {
+      const status = this.healthMonitor.getStatus();
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({
+        status: 'ok',
+        agentMode: this.agentMode,
+        dryRun: this.config.dryRun,
+        uptimeSeconds: status.uptimeSeconds,
+        healthy: status.healthy,
+      }));
+    });
+    httpServer.listen(port, () => {
+      this.logger.info('platinum_start', `Health check HTTP server listening on port ${port}`);
+    });
   }
 
   private async connectMCPServers(): Promise<void> {

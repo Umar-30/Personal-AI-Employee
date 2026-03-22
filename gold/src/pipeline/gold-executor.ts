@@ -53,6 +53,15 @@ export async function executeGoldTaskPlan(
       logger.info('gold_executor_approval', `Step ${step.index} is sensitive: ${step.description}`, plan.frontmatter.taskRef);
 
       const pendingDir = path.join(context.vaultRoot, 'Pending_Approval');
+      const approvalSlug = plan.frontmatter.taskRef.replace('.md', '');
+      const approvalFile = path.join(pendingDir, `APPROVAL_${approvalSlug}_${step.index}.md`);
+
+      // Skip if approval request already exists (prevents duplicate requests on re-runs)
+      if (fs.existsSync(approvalFile)) {
+        logger.info('gold_executor_approval', `Approval already pending for step ${step.index} — waiting`, plan.frontmatter.taskRef);
+        return;
+      }
+
       createApprovalRequest(
         plan.frontmatter.taskRef,
         plan.filename,
@@ -92,15 +101,20 @@ export async function executeGoldTaskPlan(
 
           if (result.requiresApproval) {
             const pendingDir = path.join(context.vaultRoot, 'Pending_Approval');
-            createApprovalRequest(
-              plan.frontmatter.taskRef,
-              plan.filename,
-              step.index,
-              step.description,
-              result.approvalReason || 'Skill requires approval',
-              buildApprovalImpact(step.description, mcpManager),
-              pendingDir,
-            );
+            const approvalSlug = plan.frontmatter.taskRef.replace('.md', '');
+            const approvalFile = path.join(pendingDir, `APPROVAL_${approvalSlug}_${step.index}.md`);
+
+            if (!fs.existsSync(approvalFile)) {
+              createApprovalRequest(
+                plan.frontmatter.taskRef,
+                plan.filename,
+                step.index,
+                step.description,
+                result.approvalReason || 'Skill requires approval',
+                buildApprovalImpact(step.description, mcpManager),
+                pendingDir,
+              );
+            }
 
             auditLogger.log({
               actor: 'gold-executor',

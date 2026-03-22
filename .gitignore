@@ -8,6 +8,9 @@ dist/
 .env
 .env.*
 
+# MCP config (contains secrets)
+.mcp.json
+
 # Auth tokens and credentials — NEVER commit
 linkedin-token.txt
 *-token.txt
@@ -43,3 +46,7 @@ Thumbs.db
 
 
 .node_modules/
+
+.app.yaml
+app.yaml
+

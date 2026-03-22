@@ -15,7 +15,7 @@ import { parsePlanFile, isComplete } from '../../bronze/src/models/plan-file';
 import { parseTaskFile } from '../../bronze/src/models/task-file';
 
 import { MCPManager } from '../../silver/src/mcp/mcp-manager';
-import { getGmailMCPConfig, getLinkedInMCPConfig } from '../../silver/src/mcp/mcp-configs';
+import { getGmailMCPConfig, getLinkedInMCPConfig, ensureGmailTokenFresh } from '../../silver/src/mcp/mcp-configs';
 import { GmailWatcher } from '../../silver/src/watchers/gmail-watcher';
 import { LinkedInWatcher } from '../../silver/src/watchers/linkedin-watcher';
 import { SendEmailSkill } from '../../silver/src/skills/send-email.skill';
@@ -371,6 +371,7 @@ class GoldDaemon {
   private async connectMCPServers(): Promise<void> {
     // Gmail MCP (Silver)
     try {
+      await ensureGmailTokenFresh();
       await this.mcpManager.connect(getGmailMCPConfig());
       this.serviceHealth['gmail_mcp'] = true;
     } catch {
