@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.26.0",
+    "@playwright/mcp": "^0.0.29",
     "chokidar": "^5.0.0",
     "execa": "^5.1.1",
     "glob": "^13.0.3",

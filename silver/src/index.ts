@@ -16,7 +16,7 @@ import { parsePlanFile, isComplete } from '../../bronze/src/models/plan-file';
 import { parseTaskFile } from '../../bronze/src/models/task-file';
 
 import { MCPManager } from './mcp/mcp-manager';
-import { getGmailMCPConfig, getLinkedInMCPConfig } from './mcp/mcp-configs';
+import { getGmailMCPConfig, getLinkedInMCPConfig, getPlaywrightMCPConfig } from './mcp/mcp-configs';
 import { GmailWatcher } from './watchers/gmail-watcher';
 import { LinkedInWatcher } from './watchers/linkedin-watcher';
 import { WhatsAppWatcher } from './watchers/whatsapp-watcher';
@@ -24,6 +24,7 @@ import { SilverExecutionContext, executeSilverTaskPlan } from './pipeline/silver
 import { SendEmailSkill } from './skills/send-email.skill';
 import { LinkedInPostSkill } from './skills/linkedin-post.skill';
 import { DailyBriefingSkill } from './skills/daily-briefing.skill';
+import { WebTaskSkill } from './skills/web-task.skill';
 
 import fs from 'fs';
 import path from 'path';
@@ -62,6 +63,7 @@ class SilverDaemon {
     this.skillRegistry.register(new SendEmailSkill(this.mcpManager), 15);
     this.skillRegistry.register(new LinkedInPostSkill(this.mcpManager), 25);
     this.skillRegistry.register(new DailyBriefingSkill(), 30);
+    this.skillRegistry.register(new WebTaskSkill(this.mcpManager), 35);
 
     // Generic reasoning as fallback (lowest priority)
     this.skillRegistry.register(new GenericReasoningSkill(), 999);
@@ -312,6 +314,17 @@ class SilverDaemon {
       await this.mcpManager.connect(getLinkedInMCPConfig());
     } catch {
       this.logger.warn('silver_start', 'LinkedIn MCP server connection failed — LinkedIn features will be unavailable');
+    }
+
+    if (process.env.PLAYWRIGHT_ENABLED === 'true') {
+      try {
+        await this.mcpManager.connect(getPlaywrightMCPConfig());
+        this.logger.info('silver_start', 'Playwright MCP connected — web automation enabled');
+      } catch {
+        this.logger.warn('silver_start', 'Playwright MCP connection failed — web tasks will be unavailable');
+      }
+    } else {
+      this.logger.warn('silver_start', 'Playwright MCP disabled (set PLAYWRIGHT_ENABLED=true to enable)');
     }
   }
 }

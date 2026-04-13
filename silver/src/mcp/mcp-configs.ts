@@ -87,3 +87,20 @@ export function getLinkedInMCPConfig(): MCPServerConfig {
     },
   };
 }
+
+export function getPlaywrightMCPConfig(): MCPServerConfig {
+  const headless = process.env.PLAYWRIGHT_HEADLESS !== 'false'; // default: true
+  const browser = process.env.PLAYWRIGHT_BROWSER || 'chromium';
+
+  const args = ['@playwright/mcp', '--browser', browser];
+  if (headless) args.push('--headless');
+
+  return {
+    name: 'playwright',
+    command: process.env.MCP_PLAYWRIGHT_COMMAND || 'npx',
+    args,
+    env: {
+      PLAYWRIGHT_HEADLESS: String(headless),
+    },
+  };
+}
